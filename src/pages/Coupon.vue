@@ -45,7 +45,7 @@
 import { getCouponList } from '@/api/coupin.js'
 import CouponList from '@/components/coupon/CouponList'
 import CouponItem from '@/components/coupon/CouponItem'
-
+import { replaceUrl } from '@/utils/util'
 export default {
   components: {
     CouponList,
@@ -54,8 +54,8 @@ export default {
   data () {
     return {
       list: [],
-      current: null,
-      currentLabel: null,
+      current: '',
+      currentLabel: '',
       labels: [],
       txts: []
     }
@@ -79,6 +79,7 @@ export default {
     },
     initLabel () {
       let id = this.$route.query.id
+      console.log(id)
       if (typeof id === 'string') {
         this.findCurLabelById(id)
       } else {
@@ -103,10 +104,12 @@ export default {
       this.setLabel(item)
     },
     getIcon (index) {
-      return this.list[index].brandLogo
+      return replaceUrl(this.list[index].brandLogo)
     }
   },
   mounted () {
+  },
+  beforeCreate () {
     const toast = this.$createToast({
       time: 0,
       txt: '数据加载中...'
@@ -117,7 +120,10 @@ export default {
       if (result.code === 0) {
         this.list = result.data
         this.generateLabel()
-        this.initLabel()
+        setTimeout(() => {
+          this.initLabel()
+          this.$refs['cube-scroll-nav'].refresh()
+        }, 300)
       }
     }, () => {
       toast.hide()
@@ -139,7 +145,8 @@ export default {
     background: #efeff4;
   }
   .warpper {
-    height: 100%;
+    height 100%
+    background #efeff4
   }
   .side-container {
     height: 100%;
@@ -160,12 +167,14 @@ export default {
   }
   .warpper h2{
     font-size: 28px
-    background-color: #fff
     padding: 25px 55px 25px 55px
     background url(../assets/images/tip_icon.png) no-repeat
     background-size 20px 20px
     background-position 25px center
 
+  }
+  .warpper .cube-sticky-fixed {
+    background-color #fff
   }
   .nav-bar-item {
     display: flex;

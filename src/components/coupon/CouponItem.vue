@@ -2,7 +2,7 @@
   <div class="coupon-item">
     <div class="coupon-item-innner">
       <div class="coupon-item-icon">
-        <img :src="data.logo"/>
+        <img :src="replaceUrl(data.logo)"/>
       </div>
       <div class="coupon-item-content">
         <div class="coupon-name">{{data.couponName}}</div>
@@ -16,6 +16,8 @@
 </template>
 
 <script>
+
+import { replaceUrl } from '@/utils/util'
 export default {
   props: {
     'data': {
@@ -27,6 +29,11 @@ export default {
     return {
 
     }
+  },
+  methods: {
+    replaceUrl (str) {
+      return replaceUrl(str)
+    }
   }
 }
 </script>
@@ -34,7 +41,6 @@ export default {
 <style lang="stylus">
   .coupon-item {
     width: 540px;
-    height: 180px;
     margin: 20px auto;
   }
   .coupon-item-innner {
@@ -46,6 +52,7 @@ export default {
     .coupon-item-icon {
       width 70px
       height 70px
+      flex: 0 0 70px;
       margin-right 35px
       img {
         width 100%
@@ -66,6 +73,13 @@ export default {
       .coupon-desc {
         font-size 24px
         color rgba(153, 153, 153, 1)
+      }
+      .coupon-price,
+      .coupin-desc {
+        width 367px
+        white-space nowrap
+        overflow hidden
+        text-overflow ellipsis
       }
     }
   }

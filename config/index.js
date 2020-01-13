@@ -12,7 +12,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-        target: 'http://h5.wangway.top/',
+        target: 'http://privilege.meiguowangluo.cn/',
         pathRewrite: {'^/api' : ''}
       }
     },
